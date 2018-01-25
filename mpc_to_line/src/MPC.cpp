@@ -352,7 +352,7 @@ int main() {
     std::cout << "a = " << vars[7] << std::endl;
     std::cout << std::endl;
 	
-	myfile<<vars[0]","vars[1]","vars[2]","vars[3]","vars[4]","vars[5]","vars[6]","vars[7]",\n";
+	myfile<<vars[0]<<","<<vars[1]<<","<<vars[2]<<","<<vars[3]<<","<<vars[4]<<","<<vars[5]<<","<<vars[6]<<","<<vars[7]<<",\n";
   }
   
   myfile.close();
