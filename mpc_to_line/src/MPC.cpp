@@ -5,6 +5,7 @@
 #include "Eigen-3.3/Eigen/Core"
 #include "Eigen-3.3/Eigen/QR"
 #include "matplotlibcpp.h"
+# include <fstream>
 
 namespace plt = matplotlibcpp;
 
@@ -320,6 +321,10 @@ int main() {
   std::vector<double> epsi_vals = {state[5]};
   std::vector<double> delta_vals = {};
   std::vector<double> a_vals = {};
+  
+  ofstream myfile;
+  myfile.open ("example.csv");
+  myfile << "x,y,psi,v,cte,epsi,delta,accel,\n";
 
   for (size_t i = 0; i < iters; i++) {
     std::cout << "Iteration " << i << std::endl;
@@ -346,12 +351,16 @@ int main() {
     std::cout << "delta = " << vars[6] << std::endl;
     std::cout << "a = " << vars[7] << std::endl;
     std::cout << std::endl;
+	
+	myfile<<vars[0],vars[1],vars[2],vars[3],vars[4],vars[5],vars[6],vars[7],"\n";
   }
+  
+  myfile.close();
 
   // Plot values
   // NOTE: feel free to play around with this.
   // It's useful for debugging!
-  plt::subplot(3, 1, 1);
+/*   plt::subplot(3, 1, 1);
   plt::title("CTE");
   plt::plot(cte_vals);
   plt::subplot(3, 1, 2);
@@ -361,5 +370,5 @@ int main() {
   plt::title("Velocity");
   plt::plot(v_vals);
 
-  plt::show();
+  plt::show(); */
 }
