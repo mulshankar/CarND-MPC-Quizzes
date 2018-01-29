@@ -13,7 +13,7 @@ using CppAD::AD;
 
 // TODO: Set N and dt
 size_t N = 25 ;
-double dt = 0.1 ;
+double dt = 0.05 ;
 
 // This value assumes the model presented in the classroom is used.
 //
@@ -186,15 +186,15 @@ vector<double> MPC::Solve(Eigen::VectorXd x0, Eigen::VectorXd coeffs) {
   // degrees (values in radians).
   // NOTE: Feel free to change this to something else.
   for (int i = delta_start; i < a_start; i++) {
-    vars_lowerbound[i] = -0.436332;
+    vars_lowerbound[i] = -0.436332; // 25*pi/180
     vars_upperbound[i] = 0.436332;
   }
 
   // Acceleration/decceleration upper and lower limits.
   // NOTE: Feel free to change this to something else.
   for (int i = a_start; i < n_vars; i++) {
-    vars_lowerbound[i] = -1.0;
-    vars_upperbound[i] = 1.0;
+    vars_lowerbound[i] = -1.0; // full brake
+    vars_upperbound[i] = 1.0; // full throttle
   }
 
   // Lower and upper limits for constraints
@@ -324,7 +324,7 @@ int main() {
   
   ofstream myfile;
   myfile.open ("example.csv");
-  myfile << "x,y,psi,v,cte,epsi,delta,accel,\n";
+  myfile << "Iteration,x,y,psi,v,cte,epsi,delta,accel,\n";
 
   for (size_t i = 0; i < iters; i++) {
     std::cout << "Iteration " << i << std::endl;
@@ -352,7 +352,7 @@ int main() {
     std::cout << "a = " << vars[7] << std::endl;
     std::cout << std::endl;
 	
-	myfile<<vars[0]<<","<<vars[1]<<","<<vars[2]<<","<<vars[3]<<","<<vars[4]<<","<<vars[5]<<","<<vars[6]<<","<<vars[7]<<",\n";
+	myfile<<i<<","<<vars[0]<<","<<vars[1]<<","<<vars[2]<<","<<vars[3]<<","<<vars[4]<<","<<vars[5]<<","<<vars[6]<<","<<vars[7]<<",\n";
   }
   
   myfile.close();
